@@ -26,15 +26,13 @@ public final class UseGraph {
         /*
          * Test your graph implementation(s) by calling testGraph
          */
-        // final List<Graph<String>> graphs = List.of(
-        //     new GraphImpl<>(new BreadthFirstSearch<>()),
-        //     new GraphImpl<>(new DepthFirstSearch<>())
-        // );
-        // for (final Graph<String> g : graphs) {
-        //     testGraph(g);
-        // }
-        Graph<String> graph = new GraphImpl<>();
-        testGraph(graph);
+        final List<Graph<String>> graphs = List.of(
+            new GraphImpl<>(new BreadthFirstSearch<>()),
+            new GraphImpl<>(new DepthFirstSearch<>())
+        );
+        for (final Graph<String> g : graphs) {
+            testGraph(g);
+        }
     }
 
     private static void testGraph(final Graph<String> graph) {

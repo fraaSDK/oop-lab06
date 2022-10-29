@@ -1,13 +1,13 @@
 package it.unibo.generics.graph.impl;
 
 import java.util.Collections;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Queue;
 import java.util.Set;
 
 import it.unibo.generics.graph.api.Graph;
@@ -17,12 +17,11 @@ public class GraphImpl<N> implements Graph<N> {
 
     //A Map with nodes as keys. For each node the related value is a set of nodes (edges).
     private Map<N, Set<N>> nodes = new HashMap<>();
-    //TODO
-    //private final SearchStrategy<N> strategy;
+    private final SearchStrategy<Step<N>> strategy;
 
-    // public GraphImpl(final SearchStrategy<N> strategy) {
-    //     this.strategy = strategy;
-    // }
+    public GraphImpl(final SearchStrategy<Step<N>> strategy) {
+        this.strategy = strategy;
+    }
 
     @Override
     public void addNode(N node) {
@@ -48,7 +47,13 @@ public class GraphImpl<N> implements Graph<N> {
 
     @Override
     public List<N> getPath(N source, N target) {
-        final Queue<Step<N>> frontier = new LinkedList<>();
+        /*
+         * Using a Deque (double ended queue) since it
+         * provides insertion and removal at both ends.
+         * We can mimic both a Queue and a Stack based
+         * on what strategy we choose (BFS or DFS).
+         */
+        final Deque<Step<N>> frontier = new LinkedList<>();
         frontier.add(new Step<N>(source));
         while (!frontier.isEmpty()) {
             final Step<N> lastStep = frontier.remove();
@@ -67,11 +72,11 @@ public class GraphImpl<N> implements Graph<N> {
      * @param frontier
      * @param step to expand.
      */
-    private void expandFrontier(final Queue<Step<N>> frontier, final Step<N> step) {
+    private void expandFrontier(final Deque<Step<N>> frontier, final Step<N> step) {
         final N currentNode = step.getCurrentPosition();
-        //Adds all the reacheable nodes (neighbours) of currentNode in the frontier.
+        //Adds all the reachable nodes (neighbours) of currentNode in the frontier.
         for (final N node : linkedNodes(currentNode)) {
-            frontier.add(new Step<N>(step, node));
+            strategy.addToFrontier(frontier, new Step<>(step, node));
         }
     }
 
