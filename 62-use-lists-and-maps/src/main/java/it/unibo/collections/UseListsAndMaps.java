@@ -32,7 +32,7 @@ public final class UseListsAndMaps {
          * 1) Create a new ArrayList<Integer>, and populate it with the numbers
          * from 1000 (included) to 2000 (excluded).
          */
-        List<Integer> arrayList = new ArrayList<>();
+        final List<Integer> arrayList = new ArrayList<>();
         for (int i = START_VALUE; i < END_VALUE; i++) {
             arrayList.add(i);
         }
@@ -42,7 +42,7 @@ public final class UseListsAndMaps {
          * without using any looping construct (for, while), populate it with
          * the same contents of the list of point 1.
          */
-        List<Integer> linkedList = new LinkedList<>(arrayList);
+        final List<Integer> linkedList = new LinkedList<>(arrayList);
 
         /*
          * 3) Using "set" and "get" and "size" methods, swap the first and last
@@ -71,16 +71,14 @@ public final class UseListsAndMaps {
          * TestPerformance.java.
          */
         long arrayListTime = System.nanoTime();
-        for (int i = 0; i <= ELEMS; i++) {
-            final int head = arrayList.get(0);
-            arrayList.add(arrayList.indexOf(head), i);
+        for (int i = 0; i < ELEMS; i++) {
+            arrayList.add(0, i);
         }
         arrayListTime = System.nanoTime() - arrayListTime;
 
         long linkedListTime = System.nanoTime();
-        for (int i = 0; i <= ELEMS; i++) {
-            final int head = linkedList.get(0);
-            linkedList.add(linkedList.indexOf(head), i);
+        for (int i = 0; i < ELEMS; i++) {
+            linkedList.add(0, i);
         }
         linkedListTime = System.nanoTime() - linkedListTime;
         
@@ -103,7 +101,7 @@ public final class UseListsAndMaps {
 
         middleElemIndex = linkedList.size() / 2;
         long linkedListReadTime = System.nanoTime();
-        for (int i = 0; i < s.length; i++) {
+        for (int i = 0; i < CYCLES; i++) {
             linkedList.get(middleElemIndex);
         }
         linkedListReadTime = System.nanoTime() - linkedListReadTime;
