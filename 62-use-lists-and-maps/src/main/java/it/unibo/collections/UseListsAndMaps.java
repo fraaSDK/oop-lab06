@@ -132,7 +132,7 @@ public final class UseListsAndMaps {
         Map<String, Long> populations = new HashMap<>();
         populations.put("Africa", 1_110_635_000L);
         populations.put("Americas", 972_005_000L);
-        populations.put("Antartica", 0L);
+        populations.put("Antarctica", 0L);
         populations.put("Asia", 4_298_723_000L);
         populations.put("Europe", 742_452_000L);
         populations.put("Oceania", 38_304_000L);
